@@ -6,19 +6,19 @@
 // before executing VMLAUNCH
 
 #pragma once
-#include "pch.h"
-#include <Windows.h>
+// #include "pch.h"
+// #include <Windows.h>
 #include <iostream>
 
 
 using namespace std;
 
 
-#define BX_SUPPORT_VMX 1
+// #define BX_SUPPORT_VMX 1
 #define BX_SUPPORT_X86_64 1
 #define BX_SUPPORT_VMX 2
 
-int CPL = 0; // assume you're running on kernel
+// int CPL = 0; // assume you're running on kernel
 
 
 
@@ -26,10 +26,10 @@ int CPL = 0; // assume you're running on kernel
 
 #define BX_CPU_ID (0)
 
-#define FMT_LL "%I64"
-#define FMT_TICK "%011I64u"
-#define FMT_ADDRX64 "%016I64x"
-#define FMT_PHY_ADDRX64 "%012I64x"
+#define FMT_LL "%ll"
+#define FMT_TICK "%011llu"
+#define FMT_ADDRX64 "%016lx"
+#define FMT_PHY_ADDRX64 "%012llx"
 
 typedef unsigned char      Bit8u;
 typedef   signed char      Bit8s;
@@ -37,9 +37,9 @@ typedef unsigned short     Bit16u;
 typedef   signed short     Bit16s;
 typedef unsigned int       Bit32u;
 typedef   signed int       Bit32s;
-typedef unsigned __int64   Bit64u;
-typedef   signed __int64   Bit64s;
-typedef unsigned __int64 uint64_t;
+typedef uint64_t   Bit64u;
+typedef   int64_t   Bit64s;
+// typedef unsigned long long uint64_t;
 
 typedef Bit64u bx_phy_address;
 typedef Bit32u bx_bool;
@@ -97,7 +97,7 @@ typedef struct bx_VMX_Cap
 } VMX_CAP;
 
 
-#define BX_CONST64(x)  (x##I64)
+#define BX_CONST64(x)  (x##ll)
 
 // VMCS pointer is always 64-bit variable
 const Bit64u BX_INVALID_VMCSPTR = BX_CONST64(0xFFFFFFFFFFFFFFFF);
@@ -1264,7 +1264,7 @@ typedef struct bx_VMCS
 // -----------------
 
 //   [4:0] - TSC:VMX_PREEMPTION_TIMER ratio
-//     [5] - VMEXITs store the value of EFER.LMA into the “x86-64 guest"
+//     [5] - VMEXITs store the value of EFER.LMA into the ï¿½x86-64 guest"
 //           VMENTRY control (must set to '1 if 'unrestricted guest' is supported)
 //     [6] - support VMENTER to HLT state
 //     [7] - support VMENTER to SHUTDOWN state
@@ -1849,12 +1849,12 @@ public:
 
 
 
-BOOLEAN CheckVMXState(VMCS_CACHE *pVm, BOOLEAN IsVMResume, UINT64 VMXON_Pointer, INT32 RevisionID,
-	UINT32 _vmx_pin_vmexec_ctrl_supported_bits, UINT32 _vmx_proc_vmexec_ctrl_supported_bits,
-	UINT32 _vmx_vmexec_ctrl2_supported_bits, UINT32 _vmx_vmexit_ctrl_supported_bits,
-	UINT32 _vmx_vmentry_ctrl_supported_bits, UINT64 _vmx_ept_vpid_cap_supported_bits,
-	UINT64 _vmx_vmfunc_supported_bits, UINT32 _cr0_suppmask_0, UINT32 _cr0_suppmask_1,
-	UINT32 _cr4_suppmask_0, UINT32 _cr4_suppmask_1);
+int CheckVMXState(VMCS_CACHE *pVm, int IsVMResume, uint64_t VMXON_Pointer, int32_t RevisionID,
+	uint32_t _vmx_pin_vmexec_ctrl_supported_bits, uint32_t _vmx_proc_vmexec_ctrl_supported_bits,
+	uint32_t _vmx_vmexec_ctrl2_supported_bits, uint32_t _vmx_vmexit_ctrl_supported_bits,
+	uint32_t _vmx_vmentry_ctrl_supported_bits, uint64_t _vmx_ept_vpid_cap_supported_bits,
+	uint64_t _vmx_vmfunc_supported_bits, uint32_t _cr0_suppmask_0, uint32_t _cr0_suppmask_1,
+	uint32_t _cr4_suppmask_0, uint32_t _cr4_suppmask_1);
 
 
 
